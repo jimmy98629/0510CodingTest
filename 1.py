@@ -3,33 +3,6 @@ from collections import deque
 import sys
 input = sys.stdin.readline
 
-n, m = map(int, input().split())
-graph = []
-for _ in range(n) :
-    graph.append(list(map(int, input().split())))
-
-# print(graph)
-
-# 상하좌우
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
-
-# 시작노드 집어넣기 (차의 출발점 찾기)
-queue = deque()
-for i in range(n) :
-    for j in range(m) :
-        if graph[i][j] == 1 :
-            queue.append((i, j))
-            break
-
-# 주어진 목적지 2를 다른 걸로 바꾸기?
-# ex) 2 -> .
-for i in range(n) :
-    for j in range(m) :
-        if graph[i][j] == 2 :
-            graph[i][j] = '.' 
-            break
-
 # bfs 정의
 def bfs() :
     # 큐가 빌 때까지
@@ -54,5 +27,34 @@ def bfs() :
             if graph[nx][ny] == '.' :
                 return graph[x][y]
 
+# 상하좌우 정의
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
 
-print(bfs())
+# 테스트케이스 입력
+T = int(input()) 
+
+for _ in range(T) :
+    n, m = map(int, input().split())
+    graph = []
+    for _ in range(n) :
+        graph.append(list(map(int, input().split())))
+
+    # 시작노드 집어넣기 (차의 출발점 찾기)
+    queue = deque()
+    for i in range(n) :
+        for j in range(m) :
+            if graph[i][j] == 1 :
+                queue.append((i, j))
+                break
+
+    # 주어진 목적지 2를 다른 걸로 바꾸기?
+    # ex) 2 -> '.'
+    for i in range(n) :
+        for j in range(m) :
+            if graph[i][j] == 2 :
+                graph[i][j] = '.' 
+                break
+
+    print(bfs())
+
